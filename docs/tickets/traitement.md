@@ -119,3 +119,5 @@ Classer correctement le ticket (assistance technique, incident, etc.)
 ### Patch
 
 * Définir une règle pour éviter l’envoi de patchs sur un cloud public
+
+fin de doc
