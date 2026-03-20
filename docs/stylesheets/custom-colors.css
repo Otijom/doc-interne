@@ -1,0 +1,71 @@
+/* ---------------------------------------------------
+   1. COULEURS PERSONNALISÉES
+   On utilise la syntaxe officielle de Material
+--------------------------------------------------- */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #1E2B62; 
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #00A5F3;  
+}
+
+/* ---------------------------------------------------
+   FORCAGE ABSOLU POUR LES ICÔNES OUTLINE (TABLER)
+--------------------------------------------------- */
+/* Cible le conteneur SVG ET tous ses tracés internes */
+.md-typeset .twemoji svg[stroke-width],
+.md-typeset .twemoji svg[stroke-width] * {
+    fill: none !important;
+    stroke: currentColor !important;
+}
+
+/* On préserve juste la petite boîte invisible (le fond) que Tabler met souvent au centre */
+.md-typeset .twemoji svg[stroke-width] path[stroke="none"] {
+    stroke: none !important;
+}
+
+/* ---------------------------------------------------
+   3. COULEURS DES BOUTONS AU SURVOL (HOVER)
+--------------------------------------------------- */
+
+/* A. Le Bouton Principal (celui qui est plein de base) */
+.md-typeset .md-button--primary:hover,
+.md-typeset .md-button--primary:focus {
+    /* On inverse : fond clair et texte foncé au survol */
+    background-color: #FFFFFF !important; 
+    border-color: #1E2B62 !important;     
+    color: #1E2B62 !important;            
+}
+
+/* B. Le Bouton Secondaire (celui qui a juste le contour de base) */
+.md-typeset .md-button:not(.md-button--primary):hover,
+.md-typeset .md-button:not(.md-button--primary):focus {
+    /* Un fond légèrement bleuté au survol */
+    background-color: rgba(30, 43, 98, 0.1) !important; 
+    color: #1E2B62 !important; 
+    border-color: #1E2B62 !important;
+}
+
+/* ---------------------------------------------------
+   4. ALIGNEMENT VERTICAL DES ICÔNES ET DU TEXTE
+--------------------------------------------------- */
+
+/* A. Pour les boutons (Centrage absolu avec Flexbox) */
+.md-typeset .md-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center;
+    gap: 0.5rem; /* Ajoute un espace propre et régulier entre l'icône et le texte */
+}
+
+/* On annule la marge par défaut que MkDocs met parfois sur les icônes dans les boutons */
+.md-typeset .md-button .twemoji {
+    margin: 0 !important;
+}
+
+/* B. Pour les icônes dans les paragraphes et les listes (Cartes) */
+.md-typeset .twemoji,
+.md-typeset .twemoji svg {
+    vertical-align: middle !important;
+}

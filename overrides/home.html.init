@@ -1,0 +1,114 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+  <style>
+    .md-sidebar { display: none !important; }
+    
+    /* 1. L'IMAGE SEULE EN PLEIN ÉCRAN */
+    .tx-fullscreen-bg {
+      position: fixed; /* L'image reste figée au fond pendant qu'on scrolle */
+      top: 0; left: 0; width: 100%; height: 100vh;
+      background-image: url('{{ base_url }}/assets/hero.png');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+      will-change: opacity;
+    }
+
+    /* 2. LE CONTENEUR DU TEXTE (qui arrive par-dessus l'image) */
+    .md-content {
+      position: relative;
+      z-index: 1;
+      /* On pousse le contenu vers le bas d'exactement la hauteur de l'écran (100vh) */
+      margin-top: 100vh; 
+      /* On remet la couleur de fond du site pour cacher l'image quand on lit */
+      background-color: var(--md-default-bg-color); 
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    /* 3. STYLE DU TEXTE D'INTRODUCTION */
+    .tx-hero-text {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem auto; /* Marge du bas réduite (de 5rem à 3rem) pour rapprocher les cartes */
+    }
+    .tx-hero-text h1 { 
+      font-size: 2.2rem; /* Titre beaucoup plus standard (au lieu de 3.5rem) */
+      font-weight: 800; 
+      margin-bottom: 0.5rem; 
+      color: var(--md-default-fg-color); 
+    }
+    .tx-hero-text p { 
+      font-size: 1.1rem; /* Paragraphe plus lisible (au lieu de 1.5rem) */
+      color: var(--md-default-fg-color--light); 
+      margin-bottom: 1.5rem; 
+    }
+    /* 4. ANIMATION DE RÉVÉLATION (FADE REVEAL) */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* 5. LE BANDEAU 100% ET L'ENCART GRIS CLAIR (#F2F2EE) */
+    .tx-fullwidth-band {
+      width: 100vw; 
+      position: relative; left: 50%; right: 50%;
+      margin-left: -50vw; margin-right: -50vw;
+      padding: 4rem 0;
+      background-color: transparent;
+    }
+
+    .tx-rounded-insert {
+      max-width: 1220px; margin: 0 auto;
+      background-color: #F2F2EE; 
+      color: var(--md-default-fg-color); 
+      padding: 4rem 2rem; border-radius: 24px; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .tx-rounded-insert h2 { color: var(--md-default-fg-color) !important; font-weight: 700; margin-top: 0; }
+    .tx-rounded-insert p { color: var(--md-default-fg-color--light) !important; font-size: 1.2rem; margin-bottom: 2rem; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div id="hero-bg" class="tx-fullscreen-bg"></div>
+  
+  <div class="md-typeset">
+    {{ super() }}
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Fade out de l'image de fond
+      var heroBg = document.getElementById("hero-bg");
+      if (heroBg) {
+        window.addEventListener("scroll", function() {
+          var scrollPos = window.scrollY;
+          // L'image s'efface sur la hauteur de l'écran
+          var fadePoint = window.innerHeight; 
+          var opacity = 1 - (scrollPos / fadePoint);
+          if (opacity < 0) opacity = 0;
+          heroBg.style.opacity = opacity;
+        });
+      }
+
+      // Fade Reveal des textes et cartes
+      var reveals = document.querySelectorAll(".reveal-on-scroll");
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -50px 0px" });
+
+      reveals.forEach(function(reveal) { observer.observe(reveal); });
+    });
+  </script>
+{% endblock %}

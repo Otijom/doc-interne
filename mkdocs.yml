@@ -1,0 +1,102 @@
+site_name: Documentation Interne Teclib'
+site_description: Documentation technique et interne pour les équipes Teclib.
+site_author: Équipe Rédaction Technique
+
+# Lien direct vers votre repo GitHub (ajoute une icône en haut à droite)
+repo_name: teclib/internal-docs
+repo_url: https://github.com/votre-organisation/internal-docs
+
+theme:
+  name: material
+  custom_dir: overrides
+  favicon: assets/favicon.png
+  logo: assets/logo.png
+  font:
+    text: Poppins
+    code: Roboto Mono # Police classique pour les blocs de code
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share
+  # Couleurs (à adapter avec le code hexadécimal exact de Teclib/GLPI)
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Passer en mode sombre
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Passer en mode clair
+      icon: 
+        menu: tabler/outline/menu-2
+        close: tabler/outline/square-x
+
+  # Activer les fonctionnalités d'ergonomie (Comme sur le Helpcenter GLPI)
+  features:
+    - navigation.tabs # Onglets de navigation en haut
+    - navigation.tabs.sticky # Les onglets restent visibles au scroll
+    - navigation.sections # Regroupe le menu de gauche proprement
+    - navigation.top # Bouton "Retour en haut"
+    - search.suggest # Autocomplétion dans la barre de recherche
+    - search.highlight # Surligne les mots trouvés
+    - content.code.copy # Bouton pour copier les blocs de code
+
+# Les extensions Markdown (pour faire de beaux tableaux, alertes, etc.)
+markdown_extensions:
+  - admonition # Pour les encarts "Astuce", "Attention"
+  - attr_list
+  - md_in_html
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details # Encarts dépliables
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
+  - toc:
+      permalink: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+
+# Custom des couleurs du thème
+extra_css:
+  - stylesheets/custom-colors.css
+
+# Configuration des plugins (dont le moteur de recherche)
+plugins:
+  - search:
+      lang: fr # Active la prise en charge du français (accents, pluriels, conjugaisons)
+
+# La structure exacte de votre menu (Navigation)
+nav:
+  -  Accueil: index.md
+  -  Gestion des tickets:
+      - Identification: tickets/index.md
+      - Traitement: tickets/traitement.md
+      - Aide aux Devs: tickets/aide-aux-devs.md
+  -  Guide Administrateur:
+      - Introduction: guide-administrateur/index.md
+      - Installation & Setup: guide-administrateur/installation.md
+      - Règles d'import: guide-administrateur/regles-import.md
+      - Les Listes Noires: guide-administrateur/listes-noires.md
+  -  Plugins:
+      - Vue d'ensemble: plugins/index.md
+      - GLPI Inventory: plugins/inventory.md
+      - Advanced Forms: plugins/advanced-forms.md
+  -  FAQ: faq/index.md
